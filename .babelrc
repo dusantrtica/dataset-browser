@@ -1,0 +1,21 @@
+{
+  presets: ['es2015', 'react', 'stage-0'],
+  plugins: [
+    'add-module-exports',
+    'transform-decorators-legacy',
+    'transform-object-rest-spread',
+  ],
+  env: {
+    production: {
+      plugins: [
+        'transform-react-remove-prop-types',
+        'transform-react-constant-elements',
+      ],
+    },
+    test: {
+      passPerPreset: true,
+      presets: ['es2015', 'react'],
+      plugins: ['transform-runtime', 'rewire'],
+    },
+  },
+}
