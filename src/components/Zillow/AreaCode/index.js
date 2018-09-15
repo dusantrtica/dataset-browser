@@ -1,0 +1,17 @@
+import React from 'react';
+import Select from 'react-virtualized-select';
+import createFilterOptions from 'react-select-fast-filter-options';
+// import 'react-select/dist/react-select.css';
+import 'react-virtualized/styles.css';
+import 'react-virtualized-select/styles.css';
+
+const AreaCode = ({ name, selectedOption, options, onChange }) => (
+  <Select
+    value={selectedOption}
+    options={options}
+    filterOptions={createFilterOptions({ options })}
+    onChange={onChange}
+  />
+);
+
+export default AreaCode;

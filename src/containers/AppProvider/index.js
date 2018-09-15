@@ -11,6 +11,7 @@ const MainApp = () => {
     // <Provider>
     <Router basepath={window.basePath}>
       <App path="/">
+        <Redirect from="/" to="/zillow" />
         <Authenticator path="/">
           <Zillow path="zillow/" />
           <NotFound default />

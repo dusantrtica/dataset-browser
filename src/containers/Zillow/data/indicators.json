@@ -1,0 +1,273 @@
+{
+  "name": "Indicators",
+  "options": [
+    { "value": "AOIP", "label": "Age of Inventory (Public)" },
+    { "value": "BSI", "label": "Buyer Seller Index" },
+    { "value": "DOZP", "label": "Days on Zillow (Public)" },
+    { "value": "SALES", "label": "Home Sales (NSA)" },
+    { "value": "SASALES", "label": "Home Sales (SA)" },
+    {
+      "value": "HSAFRAL",
+      "label": "Home Sold As Foreclosure - Ratio - All Homes"
+    },
+    { "value": "IMP", "label": "Inventory Measure (Public)" },
+    { "value": "IMSP", "label": "Inventory Measure - SSA (Public)" },
+    { "value": "IMTP", "label": "Inventory Measure - Tiers (Public)" },
+    { "value": "LPCSAL", "label": "Listings Price Cuts (SA) All Homes" },
+    { "value": "LPCSBT", "label": "Listings Price Cuts (SA) Bottom Tier" },
+    { "value": "LPCSCO", "label": "Listings Price Cuts (SA) Condominiums" },
+    { "value": "LPCSMT", "label": "Listings Price Cuts (SA) Middle Tier" },
+    {
+      "value": "LPCSSF",
+      "label": "Listings Price Cuts (SA) Single-Family Residence"
+    },
+    { "value": "LPCSTT", "label": "Listings Price Cuts (SA) Top Tier" },
+    { "value": "MHI", "label": "Market Health Index" },
+    { "value": "MLPAH", "label": "Median Listing Price - All Homes" },
+    { "value": "MLPCC", "label": "Median Listing Price - Condo/Co-op" },
+    { "value": "MLPDT", "label": "Median Listing Price - Duplex/Triplex" },
+    {
+      "value": "MLP5B",
+      "label": "Median Listing Price - Five Or More Bedrooms"
+    },
+    { "value": "MLP4B", "label": "Median Listing Price - Four Bedrooms" },
+    { "value": "MLP1B", "label": "Median Listing Price - One Bedroom" },
+    {
+      "value": "MLPSF",
+      "label": "Median Listing Price - Single-Family Residence"
+    },
+    { "value": "MLP3B", "label": "Median Listing Price - Three Bedrooms" },
+    { "value": "MLP2B", "label": "Median Listing Price - Two Bedrooms" },
+    {
+      "value": "MLPFAH",
+      "label": "Median Listing Price Per Square Foot - All Homes"
+    },
+    {
+      "value": "MLPFCC",
+      "label": "Median Listing Price Per Square Foot - Condo/Co-op"
+    },
+    {
+      "value": "MLPFDT",
+      "label": "Median Listing Price Per Square Foot - Duplex/Triplex"
+    },
+    {
+      "value": "MLPF5B",
+      "label": "Median Listing Price Per Square Foot - Five Or More Bedrooms"
+    },
+    {
+      "value": "MLPF4B",
+      "label": "Median Listing Price Per Square Foot - Four Bedrooms"
+    },
+    {
+      "value": "MLPF1B",
+      "label": "Median Listing Price Per Square Foot - One Bedroom"
+    },
+    {
+      "value": "MLPFSF",
+      "label": "Median Listing Price Per Square Foot - Single-Family Residence"
+    },
+    {
+      "value": "MLPF3B",
+      "label": "Median Listing Price Per Square Foot - Three Bedrooms"
+    },
+    {
+      "value": "MLPF2B",
+      "label": "Median Listing Price Per Square Foot - Two Bedrooms"
+    },
+    { "value": "MPCDAH", "label": "Median Price Cut Dollar - All Homes" },
+    { "value": "MPCDCO", "label": "Median Price Cut Dollar - Condo" },
+    {
+      "value": "MPCDSF",
+      "label": "Median Price Cut Dollar - Single-Family Residence"
+    },
+    { "value": "MPPRAH", "label": "Median Price Of Reduction - All Homes" },
+    { "value": "MPPRCO", "label": "Median Price Of Reduction - Condo" },
+    {
+      "value": "MPPRSF",
+      "label": "Median Price Of Reduction - Single-Family Residence"
+    },
+    { "value": "MRPAH", "label": "Median Rental Price - All Homes" },
+    { "value": "MRPCC", "label": "Median Rental Price - Condo/Co-op" },
+    { "value": "MRPDT", "label": "Median Rental Price - Duplex/Triplex" },
+    {
+      "value": "MR51B",
+      "label": "Median Rental Price - Five Or More Bedrooms"
+    },
+    { "value": "MRP4B", "label": "Median Rental Price - Four Bedrooms" },
+    {
+      "value": "MRPMF",
+      "label": "Median Rental Price - Multi-Family Residence"
+    },
+    { "value": "MRP1B", "label": "Median Rental Price - One Bedroom" },
+    {
+      "value": "MRPSF",
+      "label": "Median Rental Price - Single-Family Residence"
+    },
+    { "value": "MRPST", "label": "Median Rental Price - Studio" },
+    { "value": "MRP3B", "label": "Median Rental Price - Three Bedrooms" },
+    { "value": "MRP2B", "label": "Median Rental Price - Two Bedrooms" },
+    {
+      "value": "MRPFAH",
+      "label": "Median Rental Price Per Square Foot - All Homes"
+    },
+    {
+      "value": "MRPFCC",
+      "label": "Median Rental Price Per Square Foot - Condo/Co-op"
+    },
+    {
+      "value": "MRPFDT",
+      "label": "Median Rental Price Per Square Foot - Duplex/Triplex"
+    },
+    {
+      "value": "MRPF5B",
+      "label": "Median Rental Price Per Square Foot - Five Or More Bedrooms"
+    },
+    {
+      "value": "MRPF4B",
+      "label": "Median Rental Price Per Square Foot - Four Bedrooms"
+    },
+    {
+      "value": "MRPFMF",
+      "label": "Median Rental Price Per Square Foot - Multi-Family Residence"
+    },
+    {
+      "value": "MRPF1B",
+      "label": "Median Rental Price Per Square Foot - One Bedroom"
+    },
+    {
+      "value": "MRPFSF",
+      "label": "Median Rental Price Per Square Foot - Single-Family Residence"
+    },
+    {
+      "value": "MRPFST",
+      "label": "Median Rental Price Per Square Foot - Studio"
+    },
+    {
+      "value": "MRPF3B",
+      "label": "Median Rental Price Per Square Foot - Three Bedrooms"
+    },
+    {
+      "value": "MRPF2B",
+      "label": "Median Rental Price Per Square Foot - Two Bedrooms"
+    },
+    { "value": "MSPAH", "label": "Median Sold Price - All Homes" },
+    {
+      "value": "MSPFAH",
+      "label": "Median Sold Price Per Square Foot - All Homes"
+    },
+    { "value": "MSPFCO", "label": "Median Sold Price Per Square Foot - Condo" },
+    {
+      "value": "MSPFSF",
+      "label": "Median Sold Price Per Square Foot - Single-Family Residence"
+    },
+    { "value": "MVALFAH", "label": "Median Value Per Square Foot - All Homes" },
+    { "value": "NFS", "label": "NF Sales" },
+    {
+      "value": "PHDVAH",
+      "label": "Percent Of Homes Decreasing In Values - All Homes"
+    },
+    {
+      "value": "PHIVAH",
+      "label": "Percent Of Homes Increasing In Values - All Homes"
+    },
+    {
+      "value": "PHSGAH",
+      "label": "Percent Of Homes Selling For Gain - All Homes"
+    },
+    {
+      "value": "PHSLAH",
+      "label": "Percent Of Homes Selling For Loss - All Homes"
+    },
+    {
+      "value": "PLPRAH",
+      "label": "Percent Of Listings With Price Reductions - All Homes"
+    },
+    {
+      "value": "PLPRBT",
+      "label": "Percent Of Listings With Price Reductions - Bottom Tier"
+    },
+    {
+      "value": "PLPRCO",
+      "label": "Percent Of Listings With Price Reductions - Condo"
+    },
+    {
+      "value": "PLPRMT",
+      "label": "Percent Of Listings With Price Reductions - Middle Tier"
+    },
+    {
+      "value": "PLPRSF",
+      "label": "Percent Of Listings With Price Reductions - Single-Family Residence"
+    },
+    {
+      "value": "PLPRTT",
+      "label": "Percent Of Listings With Price Reductions - Top Tier"
+    },
+    {
+      "value": "PTPFHAH",
+      "label": "Percent Transactions That Are Previously Foreclosured Homes - All Homes"
+    },
+    { "value": "PRRAH", "label": "Price To Rent Ratio - All Homes" },
+    { "value": "TURNAH", "label": "Turnover - All Homes" },
+    { "value": "USRAH", "label": "Unsold Renos - All Homes" },
+    { "value": "ZHVIAH", "label": "Zillow Home Value Index - All Homes" },
+    { "value": "ZHVISAH", "label": "Zillow Home Value Index - All Homes" },
+    {
+      "value": "ZHVIBTY",
+      "label": "Zillow Home Value Index - Bottom Tier Year-Over-Year"
+    },
+    { "value": "ZHVIBT", "label": "Zillow Home Value Index - Bottom Tier" },
+    { "value": "ZHVICO", "label": "Zillow Home Value Index - Condo" },
+    {
+      "value": "ZHVI5B",
+      "label": "Zillow Home Value Index - Five Or More Bedrooms"
+    },
+    { "value": "ZHVI4B", "label": "Zillow Home Value Index - Four Bedrooms" },
+    {
+      "value": "ZHVIMTY",
+      "label": "Zillow Home Value Index - Middle Tier - Year-Over-Year"
+    },
+    { "value": "ZHVIMT", "label": "Zillow Home Value Index - Middle Tier" },
+    { "value": "ZHVI1B", "label": "Zillow Home Value Index - One Bedroom" },
+    {
+      "value": "ZHVISF",
+      "label": "Zillow Home Value Index - Single-Family Residence"
+    },
+    { "value": "ZHVI3B", "label": "Zillow Home Value Index - Three Bedrooms" },
+    {
+      "value": "ZHVITTY",
+      "label": "Zillow Home Value Index - Top Tier - Year-Over-Year"
+    },
+    { "value": "ZHVITT", "label": "Zillow Home Value Index - Top Tier" },
+    { "value": "ZHVI2B", "label": "Zillow Home Value Index - Two Bedrooms" },
+    {
+      "value": "ZRIAHMFS",
+      "label": "Zillow Rental Index - All Homes Plus Multi-Family Summary"
+    },
+    {
+      "value": "ZRIAHMF",
+      "label": "Zillow Rental Index - All Homes Plus Multi-Family"
+    },
+    { "value": "ZRIAHS", "label": "Zillow Rental Index - All Homes Summary" },
+    { "value": "ZRIAH", "label": "Zillow Rental Index - All Homes" },
+    {
+      "value": "ZRIMFRRS",
+      "label": "Zillow Rental Index - Multi-Family Residence Summary"
+    },
+    {
+      "value": "ZRIMFRR",
+      "label": "Zillow Rental Index - Multi-Family Residence"
+    },
+    {
+      "value": "ZRISFRRS",
+      "label": "Zillow Rental Index - Single-Family Residence Summary"
+    },
+    {
+      "value": "ZRISFRR",
+      "label": "Zillow Rental Index - Single-Family Residence"
+    },
+    {
+      "value": "ZRIFAH",
+      "label": "Zillow Rental Index Per Square Foot - All Homes"
+    }
+  ]
+}

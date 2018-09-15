@@ -1,5 +1,9 @@
-import React from 'react';
+import React, { Component } from 'react';
+import Controls from './Controls';
 
-const Zillow = () => <div>Zillow</div>;
-
+class Zillow extends Component {
+  render() {
+    return <Controls />;
+  }
+}
 export default Zillow;
