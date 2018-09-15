@@ -5,6 +5,7 @@ import App from '../App';
 import NotFound from '../NotFound';
 import Authenticator from '../Authenticator';
 import Zillow from '../Zillow';
+import Dataviewer from '../Zillow/Dataviewer';
 
 const MainApp = () => {
   return (
@@ -13,7 +14,9 @@ const MainApp = () => {
       <App path="/">
         <Redirect from="/" to="/zillow" />
         <Authenticator path="/">
-          <Zillow path="zillow/" />
+          <Zillow path="zillow/">
+            <Dataviewer path="search/" />
+          </Zillow>
           <NotFound default />
         </Authenticator>
         <NotFound default />

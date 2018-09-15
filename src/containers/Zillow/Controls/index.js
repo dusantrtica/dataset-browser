@@ -1,27 +1,29 @@
 import React, { Component, Fragment } from 'react';
+import { navigate } from '@reach/router';
 import AreaCategory from '../../../components/Zillow/AreaCategory';
 import AreaCode from '../../../components/Zillow/AreaCode';
 import Indicators from '../../../components/Zillow/Indicators';
-import statesOptions from '../data/states';
-import countiesOptions from '../data/counties';
-import metrosOptions from '../data/metros';
-import citiesOptions from '../data/cities';
-import neighborhoodsOptions from '../data/neighborhoods';
+const getStates = () => import('../data/states');
+const getCounties = () => import('../data/counties');
+const getMetros = () => import('../data/metros');
+const getCities = () => import('../data/cities');
+const getNeighborhoods = () => import('../data/neighborhoods');
+
 import indicatorsCodes from '../data/indicators';
 
 const api_key = 'ZKN-ypywK7eXGcy4wBuk';
 
-const loadAreaCodeOptions = selectedAreaCategory => {
+const getAreaCodeModule = selectedAreaCategory => {
   if (selectedAreaCategory === 'S') {
-    return statesOptions;
+    return getStates();
   } else if (selectedAreaCategory === 'CO') {
-    return countiesOptions;
+    return getCounties();
   } else if (selectedAreaCategory === 'M') {
-    return metrosOptions;
+    return getMetros();
   } else if (selectedAreaCategory === 'C') {
-    return citiesOptions;
+    return getCities();
   } else if (selectedAreaCategory === 'N') {
-    return neighborhoodsOptions;
+    return getNeighborhoods();
   }
 };
 
@@ -32,7 +34,15 @@ class Controls extends Component {
   };
   handleAreaCategoryChange = ({ value: selectedAreaCategory }) => {
     const selectedAreaCode = null;
-    this.setState({ selectedAreaCategory, selectedAreaCode });
+    getAreaCodeModule(selectedAreaCategory).then(areaCodeModule => {
+      const { name: areaCodeName, options: areaCodeOptions } = areaCodeModule;
+      this.setState({
+        selectedAreaCategory,
+        selectedAreaCode: null,
+        areaCodeName,
+        areaCodeOptions,
+      });
+    });
   };
 
   handleAreaCodeChange = selectedAreaCode => {
@@ -42,24 +52,38 @@ class Controls extends Component {
   handleIndicatorsChange = selectedIndicator => {
     this.setState({ selectedIndicator });
   };
+
   onClickSearch = () => {
     // const url =
     //   'https://www.quandl.com/api/v3/datasets/ZILLOW/C25709_ZRISFRR?api_key=ZKN-ypywK7eXGcy4wBuk';
     // fetch(url).then(console.log);
-    const {
-      selectedIndicator: { value: indicator },
-      selectedAreaCode: { value: areaCode },
-      selectedAreaCategory: areaCategory,
-    } = this.state;
+    // const {
+    //   selectedIndicator: { value: indicator },
+    //   selectedAreaCode: { value: areaCode },
+    //   selectedAreaCategory: areaCategory = '',
+    // } = this.state;
 
-    const zillowDatasetCode = `${areaCategory}${areaCode}_${indicator}`;
-    const url = `https://www.quandl.com/api/v3/datasets/ZILLOW/${zillowDatasetCode}?api_key=${api_key}`;
+    const selectedAreaCode = '25709';
+    const selectedAreaCategory = 'C';
+    const selectedIndicator = 'ZRISFRR';
 
-    fetch(url).then(console.log);
+    navigate(
+      `/zillow/search?areaCategory=${selectedAreaCategory}&areaCode=${selectedAreaCode}&indicator=${selectedIndicator}`
+    );
+
+    // const zillowDatasetCode = `${areaCategory}${areaCode}_${indicator}`;
+    // const url = `https://www.quandl.com/api/v3/datasets/ZILLOW/${zillowDatasetCode}?api_key=${api_key}`;
+    //
+    // fetch(url).then(console.log);
   };
   render() {
-    const { selectedAreaCategory, selectedAreaCode } = this.state;
-    const { name, options } = loadAreaCodeOptions(selectedAreaCategory);
+    const {
+      selectedAreaCategory,
+      selectedAreaCode,
+      areaCodeName,
+      areaCodeOptions,
+    } = this.state;
+
     return (
       <Fragment>
         <AreaCategory
@@ -67,8 +91,8 @@ class Controls extends Component {
           selectedValue={selectedAreaCategory}
         />
         <AreaCode
-          options={options}
-          name={name}
+          options={areaCodeOptions}
+          name={areaCodeName}
           selectedOption={selectedAreaCode}
           onChange={this.handleAreaCodeChange}
         />

@@ -21,8 +21,10 @@
   "dependencies": {
     "@reach/router": "^1.1.1",
     "cross-env": "^5.2.0",
+    "query-string": "^6.1.0",
     "ramda": "^0.25.0",
     "react": "^16.5.0",
+    "react-bootstrap-table-next": "^1.1.4",
     "react-dom": "^16.5.0",
     "react-redux": "^5.0.7",
     "react-select": "^2.0.0",

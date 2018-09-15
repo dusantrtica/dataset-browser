@@ -1,9 +1,14 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import Controls from './Controls';
 
 class Zillow extends Component {
   render() {
-    return <Controls />;
+    return (
+      <Fragment>
+        <Controls />
+        {this.props.children}
+      </Fragment>
+    );
   }
 }
 export default Zillow;
