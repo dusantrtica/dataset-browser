@@ -4,10 +4,10 @@ import Controls from './Controls';
 class Zillow extends Component {
   render() {
     return (
-      <Fragment>
+      <div className="container">
         <Controls />
         {this.props.children}
-      </Fragment>
+      </div>
     );
   }
 }

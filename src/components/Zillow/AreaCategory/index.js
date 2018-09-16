@@ -10,8 +10,8 @@ const options = [
   { value: 'Z', label: 'Zip Code' },
 ];
 
-const AreaCategory = ({ selectedOption, onChange }) => (
-  <Select value={selectedOption} onChange={onChange} options={options} />
+const AreaCategory = ({ selectedValue, onChange }) => (
+  <Select value={selectedValue} onChange={onChange} options={options} />
 );
 
 export default AreaCategory;

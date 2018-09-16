@@ -8,48 +8,99 @@ class Dataviewer extends Component {
   state = {
     data: {},
   };
-  fetchZillowData = ({ areaCode, areaCategory, indicator }) => {
-    const zillowDatasetCode = `${areaCategory}${areaCode}_${indicator}`;
-    const url = `https://www.quandl.com/api/v3/datasets/ZILLOW/${zillowDatasetCode}?api_key=${api_key}`;
-    fetch(url)
-      .then(res => res.json())
-      .then(({ dataset: data }) => this.setState({ data }))
-      .catch(() => {
-        this.setState({
-          status: 'not found',
-        });
-      });
-  };
-  componentDidMount() {
-    const { areaCode, areaCategory, indicator } = parseQueryString(
-      this.props.location.search
-    );
 
-    this.fetchZillowData({ areaCode, areaCategory, indicator });
-  }
-  componentDidUpdate(prevProps) {
-    const { areaCode, areaCategory, indicator } = parseQueryString(
-      this.props.location.search
-    );
+  shouldReloadZillowData = (props, prevProps) => {
+    const {
+      areaCode,
+      areaCategory,
+      indicator,
+      startDate,
+      endDate,
+    } = parseQueryString(props.location.search);
 
     const {
       areaCode: prevAreaCode,
       areaCategory: prevAreaCategory,
       indicator: prevIndicator,
+      startDate: prevStartDate,
+      endDate: prevEndDate,
     } = parseQueryString(prevProps.location.search);
+
     if (
       areaCode !== prevAreaCode ||
       areaCategory !== prevAreaCategory ||
-      indicator !== prevIndicator
+      indicator !== prevIndicator ||
+      startDate !== prevStartDate ||
+      endDate !== prevEndDate
     ) {
-      this.fetchZillowData({ areaCode, areaCategory, indicator });
+      return true;
+    }
+
+    return false;
+  };
+
+  fetchZillowData = () => {
+    const {
+      areaCode,
+      areaCategory,
+      indicator,
+      startDate,
+      endDate,
+    } = parseQueryString(this.props.location.search);
+    const zillowDatasetCode = `${areaCategory}${areaCode}_${indicator}`;
+    const url = `https://www.quandl.com/api/v3/datasets/ZILLOW/${zillowDatasetCode}?start_date=${startDate}&end_date=${endDate}&api_key=${api_key}`;
+    this.setState({
+      status: 'loading',
+    });
+    const fetchPromise = fetch(url);
+    fetchPromise
+      .then(res => {
+        if (res.status !== 200) {
+          throw 'Error';
+        } else {
+          return res.json();
+        }
+      })
+      .then(({ dataset: data }) => this.setState({ data, status: 'success' }))
+      .catch(() => {
+        this.setState({
+          status: 'error',
+        });
+      });
+  };
+  componentDidMount() {
+    this.fetchZillowData();
+
+    // const {
+    //   areaCode,
+    //   areaCategory,
+    //   indicator,
+    //   startDate,
+    //   endDate,
+    // } = parseQueryString(this.props.location.search);
+    //
+    // const selectedAreaCode = { value: areaCode };
+    // const selectedAreaCategory = { value: areaCategory };
+    // const selectedIndicator = { value: indicator };
+    //
+    // this.props.setZillowQueryParameters({
+    //   selectedAreaCode,
+    //   selectedAreaCategory,
+    //   selectedIndicator,
+    // });
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.shouldReloadZillowData(this.props, prevProps)) {
+      this.fetchZillowData();
     }
   }
   render() {
     const {
+      status,
       data: { column_names, data },
     } = this.state;
-    if (data) {
+    if (status === 'success') {
       const tableData = data.map(dataEntry => {
         const [date, value] = dataEntry;
         return {
@@ -69,8 +120,10 @@ class Dataviewer extends Component {
           />
         </Fragment>
       );
+    } else if (status === 'loading') {
+      return <div>Loading...</div>;
     } else {
-      return null;
+      return <div>Not found</div>;
     }
   }
 }

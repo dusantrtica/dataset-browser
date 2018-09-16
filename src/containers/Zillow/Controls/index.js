@@ -1,5 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { navigate } from '@reach/router';
+import DatePicker from 'react-16-bootstrap-date-picker';
+import moment from 'moment';
 import AreaCategory from '../../../components/Zillow/AreaCategory';
 import AreaCode from '../../../components/Zillow/AreaCode';
 import Indicators from '../../../components/Zillow/Indicators';
@@ -8,6 +10,7 @@ const getCounties = () => import('../data/counties');
 const getMetros = () => import('../data/metros');
 const getCities = () => import('../data/cities');
 const getNeighborhoods = () => import('../data/neighborhoods');
+import { parseQueryString } from '../../../utils';
 
 import indicatorsCodes from '../data/indicators';
 
@@ -29,12 +32,13 @@ const getAreaCodeModule = selectedAreaCategory => {
 
 class Controls extends Component {
   state = {
-    selectedAreaCategory: 'S',
-    selectedAreaCode: null,
+    selectedAreaCategory: { value: 'S' },
+    selectedAreaCode: {},
+    selectedIndicator: {},
   };
-  handleAreaCategoryChange = ({ value: selectedAreaCategory }) => {
+  handleAreaCategoryChange = selectedAreaCategory => {
     const selectedAreaCode = null;
-    getAreaCodeModule(selectedAreaCategory).then(areaCodeModule => {
+    getAreaCodeModule(selectedAreaCategory.value).then(areaCodeModule => {
       const { name: areaCodeName, options: areaCodeOptions } = areaCodeModule;
       this.setState({
         selectedAreaCategory,
@@ -46,62 +50,81 @@ class Controls extends Component {
   };
 
   handleAreaCodeChange = selectedAreaCode => {
-    console.log({ selectedAreaCode });
     this.setState({ selectedAreaCode });
   };
   handleIndicatorsChange = selectedIndicator => {
     this.setState({ selectedIndicator });
   };
 
-  onClickSearch = () => {
-    // const url =
-    //   'https://www.quandl.com/api/v3/datasets/ZILLOW/C25709_ZRISFRR?api_key=ZKN-ypywK7eXGcy4wBuk';
-    // fetch(url).then(console.log);
-    // const {
-    //   selectedIndicator: { value: indicator },
-    //   selectedAreaCode: { value: areaCode },
-    //   selectedAreaCategory: areaCategory = '',
-    // } = this.state;
+  handleStartDateChange = startDate => {
+    this.setState({ startDate });
+  };
 
-    const selectedAreaCode = '25709';
-    const selectedAreaCategory = 'C';
-    const selectedIndicator = 'ZRISFRR';
+  handleEndDateChange = endDate => {
+    this.setState({ endDate });
+  };
+
+  onClickSearch = () => {
+    const {
+      startDate,
+      endDate,
+      selectedAreaCategory: { value: areaCategory },
+      selectedAreaCode: { value: areaCode },
+      selectedIndicator: { value: indicator },
+    } = this.state;
 
     navigate(
-      `/zillow/search?areaCategory=${selectedAreaCategory}&areaCode=${selectedAreaCode}&indicator=${selectedIndicator}`
+      `/zillow/search?areaCategory=${areaCategory}&areaCode=${areaCode}&indicator=${indicator}&startDate=${startDate}&endDate=${endDate}`
     );
-
-    // const zillowDatasetCode = `${areaCategory}${areaCode}_${indicator}`;
-    // const url = `https://www.quandl.com/api/v3/datasets/ZILLOW/${zillowDatasetCode}?api_key=${api_key}`;
-    //
-    // fetch(url).then(console.log);
   };
   render() {
     const {
       selectedAreaCategory,
       selectedAreaCode,
+      selectedIndicator,
       areaCodeName,
       areaCodeOptions,
+      startDate,
+      endDate,
     } = this.state;
 
     return (
       <Fragment>
-        <AreaCategory
-          onChange={this.handleAreaCategoryChange}
-          selectedValue={selectedAreaCategory}
-        />
-        <AreaCode
-          options={areaCodeOptions}
-          name={areaCodeName}
-          selectedOption={selectedAreaCode}
-          onChange={this.handleAreaCodeChange}
-        />
+        <div className="row">
+          <div className="col">
+            <DatePicker
+              onChange={this.handleStartDateChange}
+              value={startDate}
+            />
+          </div>
+          <div className="col">
+            <DatePicker onChange={this.handleEndDateChange} value={endDate} />
+          </div>
+        </div>
+
+        <div className="row">
+          <div className="col">
+            <AreaCategory
+              onChange={this.handleAreaCategoryChange}
+              selectedValue={selectedAreaCategory}
+            />
+          </div>
+          <div className="col">
+            <AreaCode
+              options={areaCodeOptions}
+              name={areaCodeName}
+              selectedValue={selectedAreaCode}
+              onChange={this.handleAreaCodeChange}
+            />
+          </div>
+        </div>
+
         <Indicators
           options={indicatorsCodes.options}
           onChange={this.handleIndicatorsChange}
-          selectedOption={this.selectedIndicator}
+          selectedValue={selectedIndicator}
         />
-        <button type="button" onClick={this.onClickSearch}>
+        <button type="button" className="btn" onClick={this.onClickSearch}>
           Search
         </button>
       </Fragment>

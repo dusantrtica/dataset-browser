@@ -5,9 +5,9 @@ import createFilterOptions from 'react-select-fast-filter-options';
 import 'react-virtualized/styles.css';
 import 'react-virtualized-select/styles.css';
 
-const AreaCode = ({ name, selectedOption, options, onChange }) => (
+const AreaCode = ({ name, selectedValue, options, onChange }) => (
   <Select
-    value={selectedOption}
+    value={selectedValue}
     options={options}
     filterOptions={createFilterOptions({ options })}
     onChange={onChange}
