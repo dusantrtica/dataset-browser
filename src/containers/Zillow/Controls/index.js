@@ -14,6 +14,15 @@ import { parseQueryString } from '../../../utils';
 
 import indicatorsCodes from '../data/indicators';
 
+const areaCategoryOptions = [
+  { value: 'S', label: 'State' },
+  { value: 'CO', label: 'County' },
+  { value: 'M', label: 'Great Metropolitan Area' },
+  { value: 'C', label: 'City' },
+  { value: 'N', label: 'Neighborhood' },
+  { value: 'Z', label: 'Zip Code' },
+];
+
 const api_key = 'ZKN-ypywK7eXGcy4wBuk';
 
 const getAreaCodeModule = selectedAreaCategory => {
@@ -35,6 +44,8 @@ class Controls extends Component {
     selectedAreaCategory: { value: 'S' },
     selectedAreaCode: {},
     selectedIndicator: {},
+    startDate: moment().format(),
+    endDate: moment().format(),
   };
   handleAreaCategoryChange = selectedAreaCategory => {
     const selectedAreaCode = null;
@@ -77,6 +88,51 @@ class Controls extends Component {
       `/zillow/search?areaCategory=${areaCategory}&areaCode=${areaCode}&indicator=${indicator}&startDate=${startDate}&endDate=${endDate}`
     );
   };
+
+  componentDidUpdate(prevProps) {
+    const {
+      initQuery: { areaCategory, areaCode, startDate, endDate, indicator },
+    } = this.props;
+
+    const {
+      initQuery: {
+        areaCategory: prevAreaCategory,
+        areaCode: prevAreaCode,
+        startDate: prevStartDate,
+        endDate: prevEndDate,
+        indicator: prevIndicator,
+      },
+    } = prevProps;
+
+    if (
+      prevAreaCode !== areaCode ||
+      prevAreaCategory !== areaCategory ||
+      prevIndicator !== indicator
+    ) {
+      getAreaCodeModule(areaCategory).then(areaCodeModule => {
+        const { name: areaCodeName, options: areaCodeOptions } = areaCodeModule;
+        this.setState({
+          selectedAreaCategory: areaCategoryOptions.find(
+            ({ value }) => value === areaCategory
+          ),
+          selectedAreaCode: areaCode,
+          areaCodeName,
+          areaCodeOptions,
+          selectedIndicator: indicatorsCodes.options.find(
+            ({ value }) => value === indicator
+          ),
+        });
+      });
+      // this.setState({
+      //   selectedAreaCategory: { value: areaCategory },
+      //   selectedAreaCode: { value: areaCode },
+      //   startDate,
+      //   endDate,
+      //   indicator,
+      // });
+    }
+  }
+
   render() {
     const {
       selectedAreaCategory,
@@ -107,6 +163,7 @@ class Controls extends Component {
             <AreaCategory
               onChange={this.handleAreaCategoryChange}
               selectedValue={selectedAreaCategory}
+              options={areaCategoryOptions}
             />
           </div>
           <div className="col">

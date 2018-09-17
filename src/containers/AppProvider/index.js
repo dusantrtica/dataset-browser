@@ -9,20 +9,16 @@ import Dataviewer from '../Zillow/Dataviewer';
 
 const MainApp = () => {
   return (
-    // <Provider>
     <Router basepath={window.basePath}>
       <App path="/">
         <Redirect from="/" to="/zillow" />
         <Authenticator path="/">
-          <Zillow path="zillow/">
-            <Dataviewer path="search/" />
-          </Zillow>
+          <Zillow path="zillow/*" />
           <NotFound default />
         </Authenticator>
         <NotFound default />
       </App>
     </Router>
-    // </Provider>
   );
 };
 

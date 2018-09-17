@@ -71,13 +71,9 @@ class Dataviewer extends Component {
   componentDidMount() {
     this.fetchZillowData();
 
-    // const {
-    //   areaCode,
-    //   areaCategory,
-    //   indicator,
-    //   startDate,
-    //   endDate,
-    // } = parseQueryString(this.props.location.search);
+    const query = parseQueryString(this.props.location.search);
+
+    this.props.setInitSearchQuery(query);
     //
     // const selectedAreaCode = { value: areaCode };
     // const selectedAreaCategory = { value: areaCategory };
