@@ -8,7 +8,7 @@ const Table = props => (
     keyField="id"
     columns={props.columns}
     data={props.data}
-    exportCSV>
+    exportCSV={props.exportCSV}>
     {props => (
       <div>
         <ExportCSVButton {...props.csvProps}>Export CSV</ExportCSVButton>

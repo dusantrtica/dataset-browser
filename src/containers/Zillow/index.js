@@ -15,7 +15,9 @@ class Zillow extends Component {
   render() {
     return (
       <div className="container">
-        <Controls initQuery={this.state.query} />
+        <div style={{ 'margin-top': '20px', 'margin-bottom': '20px' }}>
+          <Controls initQuery={this.state.query} />
+        </div>
         <Router>
           <Dataviewer
             path="search"

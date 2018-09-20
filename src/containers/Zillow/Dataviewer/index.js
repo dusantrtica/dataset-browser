@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import Table from '../../../components/Zillow/Table';
+import DataHeader from '../../../components/Zillow/DataHeader';
 import { parseQueryString } from '../../../utils';
 
 const api_key = 'ZKN-ypywK7eXGcy4wBuk';
@@ -74,16 +75,6 @@ class Dataviewer extends Component {
     const query = parseQueryString(this.props.location.search);
 
     this.props.setInitSearchQuery(query);
-    //
-    // const selectedAreaCode = { value: areaCode };
-    // const selectedAreaCategory = { value: areaCategory };
-    // const selectedIndicator = { value: indicator };
-    //
-    // this.props.setZillowQueryParameters({
-    //   selectedAreaCode,
-    //   selectedAreaCategory,
-    //   selectedIndicator,
-    // });
   }
 
   componentDidUpdate(prevProps) {
@@ -94,10 +85,11 @@ class Dataviewer extends Component {
   render() {
     const {
       status,
-      data: { column_names, data },
+      data,
+      data: { column_names, data: tableRecords },
     } = this.state;
     if (status === 'success') {
-      const tableData = data.map(dataEntry => {
+      const tableData = tableRecords.map(dataEntry => {
         const [date, value] = dataEntry;
         return {
           id: date,
@@ -107,6 +99,7 @@ class Dataviewer extends Component {
       });
       return (
         <Fragment>
+          <DataHeader data={data} />
           <Table
             columns={column_names.map(columnName => ({
               text: columnName,

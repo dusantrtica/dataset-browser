@@ -123,13 +123,6 @@ class Controls extends Component {
           ),
         });
       });
-      // this.setState({
-      //   selectedAreaCategory: { value: areaCategory },
-      //   selectedAreaCode: { value: areaCode },
-      //   startDate,
-      //   endDate,
-      //   indicator,
-      // });
     }
   }
 
@@ -147,26 +140,30 @@ class Controls extends Component {
     return (
       <Fragment>
         <div className="row">
-          <div className="col">
+          <div className="col-lg-4">
+            Date From
             <DatePicker
               onChange={this.handleStartDateChange}
               value={startDate}
             />
           </div>
-          <div className="col">
+          <div className="col-lg-4">
+            Date To
             <DatePicker onChange={this.handleEndDateChange} value={endDate} />
           </div>
-        </div>
-
-        <div className="row">
-          <div className="col">
+          <div className="col-lg-4">
+            Area Category
             <AreaCategory
               onChange={this.handleAreaCategoryChange}
               selectedValue={selectedAreaCategory}
               options={areaCategoryOptions}
             />
           </div>
-          <div className="col">
+        </div>
+
+        <div className="row">
+          <div className="col-lg-3">
+            Area Code
             <AreaCode
               options={areaCodeOptions}
               name={areaCodeName}
@@ -174,16 +171,24 @@ class Controls extends Component {
               onChange={this.handleAreaCodeChange}
             />
           </div>
+          <div className="col-lg-7">
+            Indicators
+            <Indicators
+              options={indicatorsCodes.options}
+              onChange={this.handleIndicatorsChange}
+              selectedValue={selectedIndicator}
+            />
+          </div>
+          <div className="col-lg-2">
+            <button
+              type="button"
+              className="btn btn-success"
+              style={{ 'margin-top': '20px' }}
+              onClick={this.onClickSearch}>
+              Search
+            </button>
+          </div>
         </div>
-
-        <Indicators
-          options={indicatorsCodes.options}
-          onChange={this.handleIndicatorsChange}
-          selectedValue={selectedIndicator}
-        />
-        <button type="button" className="btn" onClick={this.onClickSearch}>
-          Search
-        </button>
       </Fragment>
     );
   }
