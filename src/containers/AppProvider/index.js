@@ -1,11 +1,9 @@
 import React from 'react';
 import { Router, Redirect } from '@reach/router';
-import { Provider } from 'react-redux';
 import App from '../App';
 import NotFound from '../NotFound';
 import Authenticator from '../Authenticator';
 import Zillow from '../Zillow';
-import Dataviewer from '../Zillow/Dataviewer';
 
 const MainApp = () => {
   return (

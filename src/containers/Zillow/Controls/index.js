@@ -5,14 +5,14 @@ import moment from 'moment';
 import AreaCategory from '../../../components/Zillow/AreaCategory';
 import AreaCode from '../../../components/Zillow/AreaCode';
 import Indicators from '../../../components/Zillow/Indicators';
+
+import indicatorsCodes from '../data/indicators';
+
 const getStates = () => import('../data/states');
 const getCounties = () => import('../data/counties');
 const getMetros = () => import('../data/metros');
 const getCities = () => import('../data/cities');
 const getNeighborhoods = () => import('../data/neighborhoods');
-import { parseQueryString } from '../../../utils';
-
-import indicatorsCodes from '../data/indicators';
 
 const areaCategoryOptions = [
   { value: 'S', label: 'State' },
@@ -23,18 +23,20 @@ const areaCategoryOptions = [
   { value: 'Z', label: 'Zip Code' },
 ];
 
-const api_key = 'ZKN-ypywK7eXGcy4wBuk';
-
-const getAreaCodeModule = selectedAreaCategory => {
+const getAreaCodeModule = (selectedAreaCategory) => {
   if (selectedAreaCategory === 'S') {
     return getStates();
-  } else if (selectedAreaCategory === 'CO') {
+  }
+  if (selectedAreaCategory === 'CO') {
     return getCounties();
-  } else if (selectedAreaCategory === 'M') {
+  }
+  if (selectedAreaCategory === 'M') {
     return getMetros();
-  } else if (selectedAreaCategory === 'C') {
+  }
+  if (selectedAreaCategory === 'C') {
     return getCities();
-  } else if (selectedAreaCategory === 'N') {
+  }
+  if (selectedAreaCategory === 'N') {
     return getNeighborhoods();
   }
 };
@@ -47,9 +49,9 @@ class Controls extends Component {
     startDate: moment().format(),
     endDate: moment().format(),
   };
-  handleAreaCategoryChange = selectedAreaCategory => {
-    const selectedAreaCode = null;
-    getAreaCodeModule(selectedAreaCategory.value).then(areaCodeModule => {
+
+  handleAreaCategoryChange = (selectedAreaCategory) => {
+    getAreaCodeModule(selectedAreaCategory.value).then((areaCodeModule) => {
       const { name: areaCodeName, options: areaCodeOptions } = areaCodeModule;
       this.setState({
         selectedAreaCategory,
@@ -60,18 +62,19 @@ class Controls extends Component {
     });
   };
 
-  handleAreaCodeChange = selectedAreaCode => {
+  handleAreaCodeChange = (selectedAreaCode) => {
     this.setState({ selectedAreaCode });
   };
-  handleIndicatorsChange = selectedIndicator => {
+
+  handleIndicatorsChange = (selectedIndicator) => {
     this.setState({ selectedIndicator });
   };
 
-  handleStartDateChange = startDate => {
+  handleStartDateChange = (startDate) => {
     this.setState({ startDate });
   };
 
-  handleEndDateChange = endDate => {
+  handleEndDateChange = (endDate) => {
     this.setState({ endDate });
   };
 
@@ -85,7 +88,7 @@ class Controls extends Component {
     } = this.state;
 
     navigate(
-      `/zillow/search?areaCategory=${areaCategory}&areaCode=${areaCode}&indicator=${indicator}&startDate=${startDate}&endDate=${endDate}`
+      `/zillow/search?areaCategory=${areaCategory}&areaCode=${areaCode}&indicator=${indicator}&startDate=${startDate}&endDate=${endDate}`,
     );
   };
 
@@ -107,19 +110,25 @@ class Controls extends Component {
     if (
       prevAreaCode !== areaCode ||
       prevAreaCategory !== areaCategory ||
-      prevIndicator !== indicator
+      prevIndicator !== indicator ||
+      prevStartDate !== startDate ||
+      prevEndDate !== endDate
     ) {
-      getAreaCodeModule(areaCategory).then(areaCodeModule => {
+      getAreaCodeModule(areaCategory).then((areaCodeModule) => {
         const { name: areaCodeName, options: areaCodeOptions } = areaCodeModule;
         this.setState({
+          startDate,
+          endDate,
           selectedAreaCategory: areaCategoryOptions.find(
-            ({ value }) => value === areaCategory
+            ({ value }) => value === areaCategory,
           ),
-          selectedAreaCode: areaCode,
+          selectedAreaCode: areaCodeOptions.find(
+            ({ value }) => value === areaCode,
+          ),
           areaCodeName,
           areaCodeOptions,
           selectedIndicator: indicatorsCodes.options.find(
-            ({ value }) => value === indicator
+            ({ value }) => value === indicator,
           ),
         });
       });
