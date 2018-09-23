@@ -15,7 +15,7 @@ class Zillow extends Component {
   render() {
     return (
       <div className="container">
-        <div style={{ 'margin-top': '20px', 'margin-bottom': '20px' }}>
+        <div style={{ marginTop: '20px', marginBottom: '20px' }}>
           <Controls initQuery={this.state.query} />
         </div>
         <Router>

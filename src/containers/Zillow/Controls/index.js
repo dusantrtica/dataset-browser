@@ -5,6 +5,7 @@ import moment from 'moment';
 import AreaCategory from '../../../components/Zillow/AreaCategory';
 import AreaCode from '../../../components/Zillow/AreaCode';
 import Indicators from '../../../components/Zillow/Indicators';
+import { stringifyQuery } from '../../../utils';
 
 import indicatorsCodes from '../data/indicators';
 
@@ -88,23 +89,42 @@ class Controls extends Component {
     const {
       startDate,
       endDate,
+      selectedZipCode: zipCode,
       selectedAreaCategory: { value: areaCategory },
       selectedAreaCode: { value: areaCode },
       selectedIndicator: { value: indicator },
     } = this.state;
 
-    navigate(
-      `/zillow/search?areaCategory=${areaCategory}&areaCode=${areaCode}&indicator=${indicator}&startDate=${startDate}&endDate=${endDate}`
-    );
+    let query = {
+      areaCategory,
+      indicator,
+      areaCode: areaCode || '',
+      zipCode: zipCode || '',
+      startDate: startDate ? startDate.substr(0, 10) : '',
+      endDate: endDate ? endDate.substr(0, 10) : '',
+    };
+
+    const stringifiedQuery = stringifyQuery(query);
+    console.log({ stringifiedQuery });
+
+    navigate(`/zillow/search?${stringifiedQuery}`);
   };
 
   componentDidUpdate(prevProps) {
     const {
-      initQuery: { areaCategory, areaCode, startDate, endDate, indicator },
+      initQuery: {
+        areaCategory,
+        areaCode,
+        startDate,
+        endDate,
+        indicator,
+        zipCode,
+      },
     } = this.props;
 
     const {
       initQuery: {
+        zipCode: prevZipCode,
         areaCategory: prevAreaCategory,
         areaCode: prevAreaCode,
         startDate: prevStartDate,
@@ -118,31 +138,54 @@ class Controls extends Component {
       prevAreaCategory !== areaCategory ||
       prevIndicator !== indicator ||
       prevStartDate !== startDate ||
-      prevEndDate !== endDate
+      prevEndDate !== endDate ||
+      prevZipCode !== zipCode
     ) {
-      getAreaCodeModule(areaCategory).then(areaCodeModule => {
-        const { name: areaCodeName, options: areaCodeOptions } = areaCodeModule;
+      if (zipCode) {
         this.setState({
+          selectedAreaCategory: areaCategoryOptions.find(
+            ({ value }) => value === 'Z'
+          ),
+          selectedZipCode: zipCode,
           startDate,
           endDate,
-          selectedAreaCategory: areaCategoryOptions.find(
-            ({ value }) => value === areaCategory
-          ),
-          selectedAreaCode: areaCodeOptions.find(
-            ({ value }) => value === areaCode
-          ),
-          areaCodeName,
-          areaCodeOptions,
-          selectedIndicator: indicatorsCodes.options.find(
-            ({ value }) => value === indicator
-          ),
         });
-      });
+      } else {
+        getAreaCodeModule(areaCategory).then(areaCodeModule => {
+          const {
+            name: areaCodeName,
+            options: areaCodeOptions,
+          } = areaCodeModule;
+          this.setState({
+            startDate,
+            endDate,
+            selectedAreaCategory: areaCategoryOptions.find(
+              ({ value }) => value === areaCategory
+            ),
+            selectedAreaCode: areaCodeOptions.find(
+              ({ value }) => value === areaCode
+            ),
+            areaCodeName,
+            areaCodeOptions,
+            selectedIndicator: indicatorsCodes.options.find(
+              ({ value }) => value === indicator
+            ),
+          });
+        });
+      }
     }
   }
 
+  handleZipCodeChange = e => {
+    const {
+      target: { value: selectedZipCode },
+    } = e;
+    this.setState({ selectedZipCode });
+  };
+
   render() {
     const {
+      selectedZipCode,
       selectedAreaCategory,
       selectedAreaCode,
       selectedIndicator,
@@ -198,7 +241,12 @@ class Controls extends Component {
           {selectedAreaCategory.value === 'Z' && (
             <div className="form-group col-lg-2">
               Zip code
-              <input className="form-control" type="text" />
+              <input
+                className="form-control"
+                type="text"
+                value={selectedZipCode}
+                onChange={this.handleZipCodeChange}
+              />
             </div>
           )}
 
@@ -206,7 +254,7 @@ class Controls extends Component {
             <button
               type="button"
               className="btn btn-success"
-              style={{ 'margin-top': '20px' }}
+              style={{ marginTop: '20px' }}
               onClick={this.onClickSearch}>
               Search
             </button>

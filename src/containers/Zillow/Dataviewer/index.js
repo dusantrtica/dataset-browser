@@ -43,12 +43,15 @@ class Dataviewer extends Component {
   fetchZillowData = () => {
     const {
       areaCode,
+      zipCode,
       areaCategory,
       indicator,
       startDate,
       endDate,
     } = parseQueryString(this.props.location.search);
-    const zillowDatasetCode = `${areaCategory}${areaCode}_${indicator}`;
+    const zillowDatasetCode = zipCode
+      ? `Z${zipCode}`
+      : `${areaCategory}${areaCode}_${indicator}`;
     const url = `https://www.quandl.com/api/v3/datasets/ZILLOW/${zillowDatasetCode}?start_date=${startDate}&end_date=${endDate}&api_key=${api_key}`;
     this.setState({
       status: 'loading',
