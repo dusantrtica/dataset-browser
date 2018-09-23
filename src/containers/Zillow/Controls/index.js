@@ -23,7 +23,7 @@ const areaCategoryOptions = [
   { value: 'Z', label: 'Zip Code' },
 ];
 
-const getAreaCodeModule = (selectedAreaCategory) => {
+const getAreaCodeModule = selectedAreaCategory => {
   if (selectedAreaCategory === 'S') {
     return getStates();
   }
@@ -50,31 +50,37 @@ class Controls extends Component {
     endDate: moment().format(),
   };
 
-  handleAreaCategoryChange = (selectedAreaCategory) => {
-    getAreaCodeModule(selectedAreaCategory.value).then((areaCodeModule) => {
-      const { name: areaCodeName, options: areaCodeOptions } = areaCodeModule;
+  handleAreaCategoryChange = selectedAreaCategory => {
+    if (selectedAreaCategory.value !== 'Z') {
+      getAreaCodeModule(selectedAreaCategory.value).then(areaCodeModule => {
+        const { name: areaCodeName, options: areaCodeOptions } = areaCodeModule;
+        this.setState({
+          selectedAreaCategory,
+          selectedAreaCode: null,
+          areaCodeName,
+          areaCodeOptions,
+        });
+      });
+    } else {
       this.setState({
         selectedAreaCategory,
-        selectedAreaCode: null,
-        areaCodeName,
-        areaCodeOptions,
       });
-    });
+    }
   };
 
-  handleAreaCodeChange = (selectedAreaCode) => {
+  handleAreaCodeChange = selectedAreaCode => {
     this.setState({ selectedAreaCode });
   };
 
-  handleIndicatorsChange = (selectedIndicator) => {
+  handleIndicatorsChange = selectedIndicator => {
     this.setState({ selectedIndicator });
   };
 
-  handleStartDateChange = (startDate) => {
+  handleStartDateChange = startDate => {
     this.setState({ startDate });
   };
 
-  handleEndDateChange = (endDate) => {
+  handleEndDateChange = endDate => {
     this.setState({ endDate });
   };
 
@@ -88,7 +94,7 @@ class Controls extends Component {
     } = this.state;
 
     navigate(
-      `/zillow/search?areaCategory=${areaCategory}&areaCode=${areaCode}&indicator=${indicator}&startDate=${startDate}&endDate=${endDate}`,
+      `/zillow/search?areaCategory=${areaCategory}&areaCode=${areaCode}&indicator=${indicator}&startDate=${startDate}&endDate=${endDate}`
     );
   };
 
@@ -114,21 +120,21 @@ class Controls extends Component {
       prevStartDate !== startDate ||
       prevEndDate !== endDate
     ) {
-      getAreaCodeModule(areaCategory).then((areaCodeModule) => {
+      getAreaCodeModule(areaCategory).then(areaCodeModule => {
         const { name: areaCodeName, options: areaCodeOptions } = areaCodeModule;
         this.setState({
           startDate,
           endDate,
           selectedAreaCategory: areaCategoryOptions.find(
-            ({ value }) => value === areaCategory,
+            ({ value }) => value === areaCategory
           ),
           selectedAreaCode: areaCodeOptions.find(
-            ({ value }) => value === areaCode,
+            ({ value }) => value === areaCode
           ),
           areaCodeName,
           areaCodeOptions,
           selectedIndicator: indicatorsCodes.options.find(
-            ({ value }) => value === indicator,
+            ({ value }) => value === indicator
           ),
         });
       });
@@ -180,7 +186,7 @@ class Controls extends Component {
               onChange={this.handleAreaCodeChange}
             />
           </div>
-          <div className="col-lg-7">
+          <div className="col-lg-6">
             Indicators
             <Indicators
               options={indicatorsCodes.options}
@@ -188,7 +194,15 @@ class Controls extends Component {
               selectedValue={selectedIndicator}
             />
           </div>
-          <div className="col-lg-2">
+
+          {selectedAreaCategory.value === 'Z' && (
+            <div className="form-group col-lg-2">
+              Zip code
+              <input className="form-control" type="text" />
+            </div>
+          )}
+
+          <div className="col-lg-1">
             <button
               type="button"
               className="btn btn-success"
