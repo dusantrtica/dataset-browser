@@ -4,6 +4,7 @@
   "description": "Quandl Dataset Browser",
   "main": "index.js",
   "scripts": {
+    "clean:build": "echo cleaning...",
     "dev": "cross-env NODE_ENV=development webpack-dashboard -c cyan -- node --max_old_space_size=4096 server.js",
     "build": "npm run clean:build && cross-env NODE_ENV=production webpack --config webpack.config.production.js --progress",
     "test": "jest"
