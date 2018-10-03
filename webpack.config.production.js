@@ -24,7 +24,7 @@ module.exports = merge(config, {
     filename: '[name].[chunkhash].js',
     chunkFilename: '[name].[chunkhash].js',
     path: path.resolve(__dirname, 'jsfrontend-build'),
-    // publicPath: '%static_cdn_url%/',
+    publicPath: '/',
   },
   entry: {
     application: 'index',
