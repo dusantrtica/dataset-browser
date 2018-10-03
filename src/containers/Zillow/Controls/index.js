@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from 'react';
+import styled from 'react-emotion';
 import { navigate } from '@reach/router';
 import DatePicker from 'react-16-bootstrap-date-picker';
 import moment from 'moment';
@@ -41,6 +42,10 @@ const getAreaCodeModule = selectedAreaCategory => {
     return getNeighborhoods();
   }
 };
+
+const StyledButton = styled('button')`
+  margin-top: 20px;
+`;
 
 class Controls extends Component {
   state = {
@@ -251,13 +256,12 @@ class Controls extends Component {
           )}
 
           <div className="col-lg-1">
-            <button
+            <StyledButton
               type="button"
               className="btn btn-success"
-              style={{ marginTop: '20px' }}
               onClick={this.onClickSearch}>
               Search
-            </button>
+            </StyledButton>
           </div>
         </div>
       </Fragment>

@@ -1,7 +1,13 @@
-import React, { Component, Fragment } from 'react';
-import { Router, Redirect } from '@reach/router';
+import React, { Component } from 'react';
+import styled from 'react-emotion';
+import { Router } from '@reach/router';
 import Controls from './Controls';
 import Dataviewer from './Dataviewer';
+
+const StyledDiv = styled('div')`
+  margin-top: 20px;
+  margin-bottom: 20px;
+`;
 
 class Zillow extends Component {
   state = {
@@ -15,9 +21,10 @@ class Zillow extends Component {
   render() {
     return (
       <div className="container">
-        <div style={{ marginTop: '20px', marginBottom: '20px' }}>
+        <StyledDiv>
           <Controls initQuery={this.state.query} />
-        </div>
+        </StyledDiv>
+
         <Router>
           <Dataviewer
             path="search"
